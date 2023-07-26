@@ -34,6 +34,7 @@ os.mkdir("opentrons_scripts")
 os.mkdir("microplate_diagrams")
 os.mkdir("run_master_table")
 os.mkdir("ms_run_tables")
+os.mkdir("color_tables")
 
 dim = 2
 iteration = 0
