@@ -27,21 +27,22 @@ torch.backends.cudnn.deterministic = True
 if torch.cuda.is_available(): torch.cuda.manual_seed_all(seed)
 np.random.seed(seed)
 
-os.mkdir("samples")
-os.mkdir("samples_runned")
-os.mkdir("raw_data")
-os.mkdir("opentrons_scripts")
-os.mkdir("microplate_diagrams")
-os.mkdir("run_master_table")
-os.mkdir("ms_run_tables")
-os.mkdir("color_tables")
+directories = ["samples", "samples_runned", "raw_data", "opentrons_scripts",
+               "microplate_diagrams", "run_master_table", "ms_run_tables", "color_tables"]
+
+for directory in directories:
+    if not os.path.exists(directory):
+        os.mkdir(directory)
+    else:
+        print(f"The directory '{directory}' already exists.")
+
 
 dim = 2
 iteration = 0
 
 bounds = torch.stack([torch.zeros(dim,dtype=dtype, device=device), torch.ones(dim,dtype=dtype, device=device)])
 
-init_samples=21
+init_samples=7
 
 sampler = draw_sobol_samples(bounds=bounds, n=init_samples, q=1).reshape(init_samples,dim)
 

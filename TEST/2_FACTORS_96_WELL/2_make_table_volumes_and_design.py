@@ -62,7 +62,7 @@ for row in range(num_rows):
             else:
                 condition = str(iteration)+"_"+str(block_design[well_row * 3 + well_col])
                 replicate=  str(iteration)+"_"+str(block_design[well_row * 3 + well_col])+"_"+str(block)
-            color = plt.cm.get_cmap('tab10')(block_design[well_row * 3 + well_col] - 1)
+            color = plt.get_cmap('tab10')(block_design[well_row * 3 + well_col] - 1)
         else:
             color = 'lightblue'
             condition = "water"
@@ -73,6 +73,7 @@ for row in range(num_rows):
         
 df = pd.DataFrame(data, columns=['well_position', 'sample','replicate',"color"])
 df=df.sort_values("well_position")
+df.to_csv("color_tables/"+str(iteration)+"_color_table.csv",index=False)
 
 # Set the axis limits and labels
 plt.xlim([0, num_cols * well_size])
