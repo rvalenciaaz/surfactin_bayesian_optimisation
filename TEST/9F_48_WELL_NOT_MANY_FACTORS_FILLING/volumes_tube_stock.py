@@ -41,8 +41,8 @@ labels={"Glucose":(0,4,40),"NH4NO3":(0,240,2400),"MgSO4":(0,2,20),"KH2PO4":(0,50
         "Na2HPO4":(0,50,500),"Na2EDTA":(0,0.2,2),"CaCl2":(0,0.2,2),"FeSO4":(0,0.2,2),"MnSO4":(0,0.2,2)}
 
 for j in samples.columns[1:]:
-    samples["Vol_"+j]=((samples[j]*labels[j][1])*maxwell/maxvol)*voly/labels[j][2]
-    samples["Water_"+j]=voly-samples["Vol_"+j]
+    samples["Vol_"+j]=round(((samples[j]*labels[j][1])*maxwell/maxvol)*voly/labels[j][2],1)
+    samples["Water_"+j]=round(voly-samples["Vol_"+j],1)
 
 
 newcol=["sample"]+[z for z in list(samples.columns) if (("Vol" in z) or ("Water" in z))]
@@ -50,3 +50,4 @@ newcol=["sample"]+[z for z in list(samples.columns) if (("Vol" in z) or ("Water"
 newdf=samples[newcol].copy()
 
 newdf.to_csv("tube_stock/"+str(iteration)+"_tube_stock.csv", index=False)
+newdf.to_excel("tube_stock/"+str(iteration)+"_tube_stock.xlsx", index=False)
