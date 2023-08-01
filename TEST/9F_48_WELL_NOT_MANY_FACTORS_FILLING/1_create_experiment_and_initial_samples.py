@@ -43,7 +43,7 @@ iteration = 0
 bounds = torch.stack([torch.zeros(dim,dtype=dtype, device=device), torch.ones(dim,dtype=dtype, device=device)])
 
 #can be changed
-init_samples=7
+init_samples=7*5
 
 sampler = draw_sobol_samples(bounds=bounds, n=init_samples, q=1).reshape(init_samples,dim)
 
