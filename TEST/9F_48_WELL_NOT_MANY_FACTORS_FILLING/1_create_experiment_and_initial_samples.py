@@ -28,7 +28,7 @@ if torch.cuda.is_available(): torch.cuda.manual_seed_all(seed)
 np.random.seed(seed)
 
 directories = ["samples", "samples_runned", "raw_data", "opentrons_scripts",
-               "microplate_diagrams", "run_master_table", "ms_run_tables", "color_tables"]
+               "microplate_diagrams", "run_master_table", "ms_run_tables", "color_tables","tube_stock"]
 
 for directory in directories:
     if not os.path.exists(directory):
