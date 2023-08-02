@@ -36,6 +36,22 @@ dictio2={i:dic2[i] for i in nen}
 for k in nen:
     samples[k]=dictio2[k]/dictio1[k]
 
+#add CTRL and REF
+#['sample', 'Glucose', 'NH4NO3', 'KH2PO4', 'Na2HPO4', 'FeSO4', 'MnSO4','MgSO4', 'Na2EDTA', 'CaCl2']
+
+cor=[(dic2[k]/dic1[k]) for k in list(samples.columns) if (k!="sample")]
+
+standard1=[str(iteration)+"_CTRL"]+cor
+standard2=[str(iteration)+"_REF"]+cor
+
+stdf=pd.DataFrame(columns=samples.columns)
+
+stdf.loc[0]=standard1
+stdf.loc[1]=standard2
+
+samples=pd.concat([samples,stdf]).reset_index(drop=True)
+
+print(samples)
 #stock data
 labels={"Glucose":(0,4,40),"NH4NO3":(0,240,2400),"MgSO4":(0,2,20),"KH2PO4":(0,50,500),
         "Na2HPO4":(0,50,500),"Na2EDTA":(0,0.2,2),"CaCl2":(0,0.2,2),"FeSO4":(0,0.2,2),"MnSO4":(0,0.2,2)}
