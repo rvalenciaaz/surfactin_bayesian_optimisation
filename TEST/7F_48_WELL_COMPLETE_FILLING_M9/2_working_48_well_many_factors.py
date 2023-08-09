@@ -12,7 +12,7 @@ import matplotlib.patches as mpatches
 random.seed(1245)
 
 #define the number of factors/dimension and the correspoding iteration index
-dim=6
+dim=7
 iteration=0
 
 maxwell=800
@@ -112,7 +112,7 @@ samples=sam.copy()
 #defining components minimum concentration, maximum concentration and stock concentration
 #reemplazar por dataframe
 labels={"Glucose":(0,4,40),"NH4Cl":(0,240,2400),"MgSO4":(0,2,20),"KH2PO4":(0,50,500),
-        "Na2HPO4":(0,50,500),"CaCl2":(0,0.2,2)}
+        "Na2HPO4":(0,50,500),"CaCl2":(0,0.2,2),"NaCl":(0,50,500)}
 
 maxvol=80
 
@@ -127,7 +127,7 @@ if (maxwell-int(maxwell/10)-dim*maxvol)!=0:
 
 #reference values, all volumes set to maxvol
 ref_values=pd.DataFrame({"sample":["0_REF","0_CTRL"],"Glucose":[maxvol]*2,"NH4Cl":[maxvol]*2,"MgSO4":[maxvol]*2,"KH2PO4":[maxvol]*2,
-        "Na2HPO4":[maxvol]*2,"CaCl2":[maxvol]*2})
+        "Na2HPO4":[maxvol]*2,"CaCl2":[maxvol]*2,"NaCl":[maxvol]*2})
 
 #new samples table with volumes
 samples=pd.concat([samples,ref_values])
@@ -184,7 +184,7 @@ sources={"extra":"A1","water":"A2"}
 
 racknumber=int(np.ceil(dim/2))
 rackcode={"Glucose":"1","NH4Cl":"1","MgSO4":"2","KH2PO4":"2",
-        "Na2HPO4":"3","CaCl2":"3"}
+        "Na2HPO4":"3","CaCl2":"3","NaCl": "4"}
 
 
 with open("opentrons_scripts/"+str(iteration)+"_opentrons.py","w") as f:
@@ -204,8 +204,8 @@ with open("opentrons_scripts/"+str(iteration)+"_opentrons.py","w") as f:
                 #f.write("\tp10.aspirate(10, reservoir['"+res+"'])\n")
                 #f.write("\tp10.dispense(10, plate['"+ving+"'])\n")
             f.write("\tp300.drop_tip()\n")
-    print(tem.columns)
-    print(3+dim)
+    #print(tem.columns)
+    #print(3+dim)
     for compi in pd.unique(tem.columns[3+dim:]):
         f.write("\t#"+compi+"\n")
         f.write("\tp300.pick_up_tip()\n")

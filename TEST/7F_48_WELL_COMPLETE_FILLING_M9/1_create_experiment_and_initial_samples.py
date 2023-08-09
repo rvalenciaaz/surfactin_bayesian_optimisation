@@ -37,7 +37,7 @@ for directory in directories:
         print(f"The directory '{directory}' already exists.")
 
 #can be changed
-dim = 6
+dim = 7
 iteration = 0
 
 bounds = torch.stack([torch.zeros(dim,dtype=dtype, device=device), torch.ones(dim,dtype=dtype, device=device)])
@@ -50,7 +50,7 @@ sampler = draw_sobol_samples(bounds=bounds, n=init_samples, q=1).reshape(init_sa
 labels=[str(iteration)+"_"+str(i+1) for i in range(init_samples)]
 
 #can be changed
-col_labels=["Glucose","NH4Cl","MgSO4","KH2PO4","Na2HPO4","CaCl2"]
+col_labels=["Glucose","NH4Cl","MgSO4","KH2PO4","Na2HPO4","CaCl2","NaCl"]
 
 init_table = pd.DataFrame({"sample":labels})
 
