@@ -50,7 +50,7 @@ sampler = draw_sobol_samples(bounds=bounds, n=init_samples, q=1).reshape(init_sa
 labels=[str(iteration)+"_"+str(i+1) for i in range(init_samples)]
 
 #can be changed
-col_labels=["Glucose","NH4Cl"]
+col_labels=["Glucose","NH4Cl"]#,"MgSO4","KH2PO4","Na2HPO4","CaCl2","NaCl"]
 
 init_table = pd.DataFrame({"sample":labels})
 

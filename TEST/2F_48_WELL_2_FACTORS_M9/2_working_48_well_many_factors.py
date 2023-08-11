@@ -12,7 +12,7 @@ import matplotlib.patches as mpatches
 random.seed(1245)
 
 #define the number of factors/dimension and the correspoding iteration index
-dim=2
+dim=7
 iteration=0
 
 maxwell=800
@@ -112,7 +112,7 @@ samples=sam.copy()
 #defining components minimum concentration, maximum concentration and stock concentration
 #reemplazar por dataframe
 labels={"Glucose":(0,4,40),"NH4Cl":(0,240,2400),"MgSO4":(0,2,20),"KH2PO4":(0,50,500),
-        "Na2HPO4":(0,50,500),"CaCl2":(0,0.2,2)}
+        "Na2HPO4":(0,50,500),"CaCl2":(0,0.2,2),"NaCl":(0,50,500)}
 
 maxvol=80
 
@@ -127,7 +127,7 @@ if (maxwell-int(maxwell/10)-dim*maxvol)!=0:
 
 #reference values, all volumes set to maxvol
 ref_values=pd.DataFrame({"sample":["0_REF","0_CTRL"],"Glucose":[maxvol]*2,"NH4Cl":[maxvol]*2,"MgSO4":[maxvol]*2,"KH2PO4":[maxvol]*2,
-        "Na2HPO4":[maxvol]*2,"CaCl2":[maxvol]*2})
+        "Na2HPO4":[maxvol]*2,"CaCl2":[maxvol]*2,"NaCl":[maxvol]*2})
 
 #new samples table with volumes
 samples=pd.concat([samples,ref_values])
@@ -184,7 +184,7 @@ sources={"extra":"A1","water":"A2"}
 
 racknumber=int(np.ceil(dim/2))
 rackcode={"Glucose":"1","NH4Cl":"1","MgSO4":"2","KH2PO4":"2",
-        "Na2HPO4":"3","CaCl2":"3"}
+        "Na2HPO4":"3","CaCl2":"3","NaCl": "4"}
 
 
 with open("opentrons_scripts/"+str(iteration)+"_opentrons.py","w") as f:
@@ -199,23 +199,23 @@ with open("opentrons_scripts/"+str(iteration)+"_opentrons.py","w") as f:
             f.write("\t#"+compi+"_"+i+"\n")
             f.write("\tp300.pick_up_tip()\n")
             for res, ving in zip(mini[compi],mini["well_position"]):
-                f.write("\tp300.aspirate("+str(maxvol)+", reservoir_"+rackcode[compi]+"['"+res+"'])\n")
-                f.write("\tp300.dispense("+str(maxvol)+", plate['"+ving+"'])\n")
+                f.write("\tp300.aspirate("+str(maxvol)+", reservoir_"+rackcode[compi]+"['"+res+"'],rate=0.7)\n")
+                f.write("\tp300.dispense("+str(maxvol)+", plate['"+ving+"'],rate=0.7)\n")
                 #f.write("\tp10.aspirate(10, reservoir['"+res+"'])\n")
                 #f.write("\tp10.dispense(10, plate['"+ving+"'])\n")
             f.write("\tp300.drop_tip()\n")
-    print(tem.columns)
-    print(3+dim)
+    #print(tem.columns)
+    #print(3+dim)
     for compi in pd.unique(tem.columns[3+dim:]):
         f.write("\t#"+compi+"\n")
         f.write("\tp300.pick_up_tip()\n")
         if compi!="extra":
             for res, ving in zip(tem[compi],tem["well_position"]):
-                f.write("\tp300.aspirate("+str(cux)+", big['"+sources[compi]+"'])\n")
+                f.write("\tp300.aspirate("+str(cux)+", big['"+sources[compi]+"'],rate=0.7)\n")
                 f.write("\tp300.dispense("+str(cux)+", plate['"+ving+"'])\n")
         else:
             for res, ving in zip(tem[compi],tem["well_position"]):
-                f.write("\tp300.aspirate("+str(res)+", big['"+sources[compi]+"'])\n")
+                f.write("\tp300.aspirate("+str(res)+", big['"+sources[compi]+"'],rate=0.7)\n")
                 f.write("\tp300.dispense("+str(res)+", plate['"+ving+"'])\n")
                 #f.write("\tp300.aspirate(200, big['"+sources[compi]+"'])\n")
                 #f.write("\tp300.dispense(200, plate['"+ving+"'])\n")
@@ -223,16 +223,19 @@ with open("opentrons_scripts/"+str(iteration)+"_opentrons.py","w") as f:
 with open("ms_run_tables/"+str(iteration)+"_ms_table.csv","w") as g:
     g.write("Bracket Type=4,,,,,,,,,,,,,,,,,,,,\n")
     g.write("Sample Type,File Name,Sample ID,Path,Instrument Method,Process Method,Calibration File,Position,Inj Vol,Level,Sample Wt,Sample Vol,ISTD Amt,Dil Factor,L1 Study,L2 Client,L3 Laboratory,L4 Company,L5 Phone,Comment,Sample Name\n")
-    g.write("Blank,"+str(iteration)+"_Blank_1,"+str(iteration)+"_Blank_1,C:\Xcalibur\Data\Richie\\0_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
-    g.write("Blank,"+str(iteration)+"_Blank_2,"+str(iteration)+"_Blank_2,C:\Xcalibur\Data\Richie\\0_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
-    g.write("Blank,"+str(iteration)+"_Blank_3,"+str(iteration)+"_Blank_3,C:\Xcalibur\Data\Richie\\0_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
+    g.write("Blank,"+str(iteration)+"_Blank_1,"+str(iteration)+"_Blank_1,C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
+    g.write("Blank,"+str(iteration)+"_Blank_2,"+str(iteration)+"_Blank_2,C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
+    g.write("Blank,"+str(iteration)+"_Blank_3,"+str(iteration)+"_Blank_3,C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
+    g.write("Unknown,"+str(iteration)+"_Solvent_1,"+str(iteration)+"_Solvent_1,C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA7,1,,0,0,0,1,,,,,,,\n")
+    g.write("Unknown,"+str(iteration)+"_Solvent_2,"+str(iteration)+"_Solvent_2,C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA7,1,,0,0,0,1,,,,,,,\n")
+    g.write("Unknown,"+str(iteration)+"_Solvent_3,"+str(iteration)+"_Solvent_3,C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA7,1,,0,0,0,1,,,,,,,\n")
     for ind,i in cotable.iterrows():
         if ind%6==0:
-            g.write("Unknown,QC_"+str(int(ind/6)+1)+",QC_"+str(int(ind/6)+1)+",C:\Xcalibur\Data\Richie\\0_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA7,1,,0,0,0,1,,,,,,,\n")
-            g.write("Unknown,"+i["replicate"]+","+i["replicate"]+",C:\Xcalibur\Data\Richie\\0_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,B"+i["well_position"]+",1,,0,0,0,1,,,,,,,\n")
+            g.write("Unknown,QC_"+str(int(ind/6)+1)+",QC_"+str(int(ind/6)+1)+",C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA8,1,,0,0,0,1,,,,,,,\n")
+            g.write("Unknown,"+i["replicate"]+","+i["replicate"]+",C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,B"+i["well_position"]+",1,,0,0,0,1,,,,,,,\n")
         else:
-            g.write("Unknown,"+i["replicate"]+","+i["replicate"]+",C:\Xcalibur\Data\Richie\\0_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,B"+i["well_position"]+",1,,0,0,0,1,,,,,,,\n")
-    g.write("Blank,"+str(iteration)+"_Blank_4,"+str(iteration)+"_Blank_4,C:\Xcalibur\Data\Richie\\0_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
-    g.write("Blank,"+str(iteration)+"_Blank_5,"+str(iteration)+"_Blank_5,C:\Xcalibur\Data\Richie\\0_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
-    g.write("Blank,"+str(iteration)+"_Blank_6,"+str(iteration)+"_Blank_6,C:\Xcalibur\Data\Richie\\0_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
+            g.write("Unknown,"+i["replicate"]+","+i["replicate"]+",C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,B"+i["well_position"]+",1,,0,0,0,1,,,,,,,\n")
+    g.write("Blank,"+str(iteration)+"_Blank_4,"+str(iteration)+"_Blank_4,C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
+    g.write("Blank,"+str(iteration)+"_Blank_5,"+str(iteration)+"_Blank_5,C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
+    g.write("Blank,"+str(iteration)+"_Blank_6,"+str(iteration)+"_Blank_6,C:\Xcalibur\Data\Richie\\"+str(iteration)+"_experiment,C:\Xcalibur\methods\Richie\\200_Richie_flow_injection_Surfactin_pumpmodule_15aux_ACN_b,C:\Xcalibur\methods\Richie\QQQ_FlowInjection_Surfactin,,RA6,1,,0,0,0,1,,,,,,,\n")
 

@@ -10,23 +10,22 @@ import string
 from functools import reduce
 import matplotlib.patches as mpatches
 
-dim=6
+dim=7
 iteration=0
 voly=5000
 maxwell=800
 maxvol=80
 
-stock=pd.read_csv("stock_table.csv")
+stock=pd.read_csv("stock_table_M9.csv")
 dic1=dict(zip(stock["compound"],stock["max_concentration_mM"]))
 
-cooper=pd.read_csv("cooper_preparation.csv")
-dic2=dict(zip(cooper["compound"],cooper["cooper_concentration_mM"]))
+cooper=pd.read_csv("M9_preparation.csv")
+dic2=dict(zip(cooper["compound"],cooper["M9_concentration_mM"]))
 
 sam=pd.read_csv("samples/"+str(iteration)+"_samples.csv")
 samples=sam.copy()
 
-compi=["Glucose","NH4NO3","MgSO4","KH2PO4",
-        "Na2HPO4","Na2EDTA","CaCl2","FeSO4","MnSO4"]
+compi=["Glucose","NH4Cl","MgSO4","KH2PO4","Na2HPO4","CaCl2","NaCl"]
 
 #adding standard concentration for fixed compounds
 nen=list(set(compi)-set(samples.columns[1:]))
@@ -51,10 +50,10 @@ stdf.loc[1]=standard2
 
 samples=pd.concat([samples,stdf]).reset_index(drop=True)
 
-print(samples)
+#print(samples)
 #stock data
-labels={"Glucose":(0,4,40),"NH4NO3":(0,240,2400),"MgSO4":(0,2,20),"KH2PO4":(0,50,500),
-        "Na2HPO4":(0,50,500),"Na2EDTA":(0,0.2,2),"CaCl2":(0,0.2,2),"FeSO4":(0,0.2,2),"MnSO4":(0,0.2,2)}
+labels={"Glucose":(0,4,40),"NH4Cl":(0,240,2400),"MgSO4":(0,2,20),"KH2PO4":(0,50,500),
+        "Na2HPO4":(0,50,500),"CaCl2":(0,0.2,2),"NaCl":(0,50,500)}
 
 for j in samples.columns[1:]:
     samples["Vol_"+j]=round(((samples[j]*labels[j][1])*maxwell/maxvol)*voly/labels[j][2],1)

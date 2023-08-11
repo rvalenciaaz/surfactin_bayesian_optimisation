@@ -10,7 +10,7 @@ import string
 from functools import reduce
 import matplotlib.patches as mpatches
 
-dim=6
+dim=2
 iteration=0
 voly=5000
 maxwell=800

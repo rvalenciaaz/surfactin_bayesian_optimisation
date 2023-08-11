@@ -178,7 +178,7 @@ for trind in range(0,dim,2):
     if ((dim%2!=1) or (trind!=dim-1)):
         tem[loi[trind+1]]=tem["sample"].apply(lambda x: re2dict[x])
 
-sources={"extra":"A1","water":"A2"}
+#sources={"extra":"A1","water":"A2"}
 
 #setup number of rack
 
@@ -204,19 +204,18 @@ with open("opentrons_scripts/"+str(iteration)+"_opentrons.py","w") as f:
                 #f.write("\tp10.aspirate(10, reservoir['"+res+"'])\n")
                 #f.write("\tp10.dispense(10, plate['"+ving+"'])\n")
             f.write("\tp300.drop_tip()\n")
-    print(tem.columns)
-    print(3+dim)
+    
     for compi in pd.unique(tem.columns[3+dim:]):
         f.write("\t#"+compi+"\n")
         f.write("\tp300.pick_up_tip()\n")
         if compi!="extra":
             for res, ving in zip(tem[compi],tem["well_position"]):
-                f.write("\tp300.aspirate("+str(cux)+", big['"+sources[compi]+"'])\n")
-                f.write("\tp300.dispense("+str(cux)+", plate['"+ving+"'])\n")
-        else:
-            for res, ving in zip(tem[compi],tem["well_position"]):
                 f.write("\tp300.aspirate("+str(res)+", big['"+sources[compi]+"'])\n")
                 f.write("\tp300.dispense("+str(res)+", plate['"+ving+"'])\n")
+        else:
+            for res, ving in zip(tem[compi],tem["well_position"]):
+                f.write("\tp300.aspirate("+str(cux)+", big['"+sources[compi]+"'])\n")
+                f.write("\tp300.dispense("+str(cux)+", plate['"+ving+"'])\n")
                 #f.write("\tp300.aspirate(200, big['"+sources[compi]+"'])\n")
                 #f.write("\tp300.dispense(200, plate['"+ving+"'])\n")
         f.write("\tp300.drop_tip()\n")
