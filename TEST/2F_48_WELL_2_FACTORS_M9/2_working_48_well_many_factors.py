@@ -199,8 +199,8 @@ with open("opentrons_scripts/"+str(iteration)+"_opentrons.py","w") as f:
             f.write("\t#"+compi+"_"+i+"\n")
             f.write("\tp300.pick_up_tip()\n")
             for res, ving in zip(mini[compi],mini["well_position"]):
-                f.write("\tp300.aspirate("+str(maxvol)+", reservoir_"+rackcode[compi]+"['"+res+"'],rate=0.7)\n")
-                f.write("\tp300.dispense("+str(maxvol)+", plate['"+ving+"'],rate=0.7)\n")
+                f.write("\tp300.aspirate("+str(maxvol)+", reservoir_"+rackcode[compi]+"['"+res+"'],rate=0.5)\n")
+                f.write("\tp300.dispense("+str(maxvol)+", plate['"+ving+"'],rate=0.5)\n")
                 #f.write("\tp10.aspirate(10, reservoir['"+res+"'])\n")
                 #f.write("\tp10.dispense(10, plate['"+ving+"'])\n")
             f.write("\tp300.drop_tip()\n")
@@ -211,11 +211,11 @@ with open("opentrons_scripts/"+str(iteration)+"_opentrons.py","w") as f:
         f.write("\tp300.pick_up_tip()\n")
         if compi!="extra":
             for res, ving in zip(tem[compi],tem["well_position"]):
-                f.write("\tp300.aspirate("+str(cux)+", big['"+sources[compi]+"'],rate=0.7)\n")
+                f.write("\tp300.aspirate("+str(cux)+", big['"+sources[compi]+"'],rate=0.5)\n")
                 f.write("\tp300.dispense("+str(cux)+", plate['"+ving+"'])\n")
         else:
             for res, ving in zip(tem[compi],tem["well_position"]):
-                f.write("\tp300.aspirate("+str(res)+", big['"+sources[compi]+"'],rate=0.7)\n")
+                f.write("\tp300.aspirate("+str(res)+", big['"+sources[compi]+"'],rate=0.5)\n")
                 f.write("\tp300.dispense("+str(res)+", plate['"+ving+"'])\n")
                 #f.write("\tp300.aspirate(200, big['"+sources[compi]+"'])\n")
                 #f.write("\tp300.dispense(200, plate['"+ving+"'])\n")
