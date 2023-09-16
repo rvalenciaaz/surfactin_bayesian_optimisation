@@ -7,8 +7,8 @@ def run(protocol: protocol_api.ProtocolContext):
 	reservoir_2= protocol.load_labware('opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap',2)
 	reservoir_3= protocol.load_labware('opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap',3)
 	reservoir_4= protocol.load_labware('opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap',4)
-	big1=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',7)
-	big2=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',8)
+	big1=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',6)
+	big2=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',9)
 	p1000 = protocol.load_instrument('p1000_single', 'right', tip_racks=[tiprack_1])
 	p300 = protocol.load_instrument('p300_single', 'left', tip_racks=[tiprack_2])
 	#Vol_Glucose
@@ -201,7 +201,6 @@ def run(protocol: protocol_api.ProtocolContext):
 	p1000.dispense(880.0,reservoir_2['D2'],rate=0.5)
 	p1000.aspirate(880.0,big1['B4'],rate=0.5)
 	p1000.dispense(880.0,reservoir_2['D3'],rate=0.5)
-	p300.drop_tip()
 	p1000.drop_tip()
 	#Water_KH2PO4
 	p1000.pick_up_tip()
@@ -301,7 +300,6 @@ def run(protocol: protocol_api.ProtocolContext):
 	p1000.dispense(308.0,reservoir_3['B2'],rate=0.5)
 	p1000.aspirate(308.0,big2['B4'],rate=0.5)
 	p1000.dispense(308.0,reservoir_3['B3'],rate=0.5)
-	p300.drop_tip()
 	p1000.drop_tip()
 	#Vol_CaCl2
 	p1000.pick_up_tip()
@@ -365,7 +363,6 @@ def run(protocol: protocol_api.ProtocolContext):
 	p1000.dispense(342.0,reservoir_4['B2'],rate=0.5)
 	p1000.aspirate(342.0,big2['B3'],rate=0.5)
 	p1000.dispense(342.0,reservoir_4['B3'],rate=0.5)
-	p300.drop_tip()
 	p1000.drop_tip()
 	#Water_NaCl
 	p1000.pick_up_tip()

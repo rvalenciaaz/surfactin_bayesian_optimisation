@@ -178,7 +178,7 @@ for trind in range(0,dim,2):
     if ((dim%2!=1) or (trind!=dim-1)):
         tem[loi[trind+1]]=tem["sample"].apply(lambda x: re2dict[x])
 
-sources={"extra":"A1","water":"A2"}
+sources={"extra":"A1","water":"A3"}
 
 #setup number of rack
 
@@ -192,15 +192,15 @@ with open("opentrons_scripts/"+str(iteration)+"_opentrons.py","w") as f:
     f.write("\tplate = protocol.load_labware('corning_48_wellplate_1.6ml_flat', 8)\n\ttiprack_2 = protocol.load_labware('opentrons_96_tiprack_300ul', 11)\n")
     for rn in range(1, racknumber+1):
         f.write("\treservoir_"+str(rn)+"= protocol.load_labware('opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap',"+str(rn)+")\n")
-    f.write("\tbig= protocol.load_labware('corning_6_wellplate_16.8ml_flat',7)\n\tp300 = protocol.load_instrument('p300_single', 'left', tip_racks=[tiprack_2])\n")
+    f.write("\tbig= protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',6)\n\tp300 = protocol.load_instrument('p300_single', 'left', tip_racks=[tiprack_2])\n")
     for i in pd.unique(tem["sample"]):
         mini=tem.loc[tem["sample"]==i].copy()
         for compi in mini.columns[3:3+dim]:
             f.write("\t#"+compi+"_"+i+"\n")
             f.write("\tp300.pick_up_tip()\n")
             for res, ving in zip(mini[compi],mini["well_position"]):
-                f.write("\tp300.aspirate("+str(maxvol)+", reservoir_"+rackcode[compi]+"['"+res+"'],rate=0.5)\n")
-                f.write("\tp300.dispense("+str(maxvol)+", plate['"+ving+"'],rate=0.5)\n")
+                f.write("\tp300.aspirate("+str(maxvol)+", reservoir_"+rackcode[compi]+"['"+res+"'],rate=0.7)\n")
+                f.write("\tp300.dispense("+str(maxvol)+", plate['"+ving+"'],rate=0.7)\n")
                 #f.write("\tp10.aspirate(10, reservoir['"+res+"'])\n")
                 #f.write("\tp10.dispense(10, plate['"+ving+"'])\n")
             f.write("\tp300.drop_tip()\n")
@@ -211,12 +211,12 @@ with open("opentrons_scripts/"+str(iteration)+"_opentrons.py","w") as f:
         f.write("\tp300.pick_up_tip()\n")
         if compi!="extra":
             for res, ving in zip(tem[compi],tem["well_position"]):
-                f.write("\tp300.aspirate("+str(cux)+", big['"+sources[compi]+"'],rate=0.5)\n")
-                f.write("\tp300.dispense("+str(cux)+", plate['"+ving+"'])\n")
+                f.write("\tp300.aspirate("+str(cux)+", big['"+sources[compi]+"'],rate=0.7)\n")
+                f.write("\tp300.dispense("+str(cux)+", plate['"+ving+"'],rate=0.7)\n")
         else:
             for res, ving in zip(tem[compi],tem["well_position"]):
-                f.write("\tp300.aspirate("+str(res)+", big['"+sources[compi]+"'],rate=0.5)\n")
-                f.write("\tp300.dispense("+str(res)+", plate['"+ving+"'])\n")
+                f.write("\tp300.aspirate("+str(res)+", big['"+sources[compi]+"'],rate=0.7)\n")
+                f.write("\tp300.dispense("+str(res)+", plate['"+ving+"'],rate=0.7)\n")
                 #f.write("\tp300.aspirate(200, big['"+sources[compi]+"'])\n")
                 #f.write("\tp300.dispense(200, plate['"+ving+"'])\n")
         f.write("\tp300.drop_tip()\n")
