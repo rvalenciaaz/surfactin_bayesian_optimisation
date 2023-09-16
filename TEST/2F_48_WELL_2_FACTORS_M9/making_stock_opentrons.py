@@ -4,6 +4,7 @@
 import pandas as pd
 import numpy as np
 
+#changing rate to 0.7
 
 iteration=0
 dim=7
