@@ -1,0 +1,123 @@
+\documentclass{article}
+\usepackage{fontspec}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{sectsty}
+\usepackage{enumitem}
+\usepackage{tikz}  % for drawing boxes
+\usepackage[margin=1in]{geometry}  % for managing margins
+
+\newcommand{\bigbox}{\raisebox{\depth}{\scalebox{1.5}{$\square$}}}
+
+\setmainfont{Roboto}
+
+\sectionfont{\large}  % make section titles normal size
+
+\begin{document}
+
+% Large box for iteration number
+\noindent\begin{tikzpicture}
+\draw (0,0) rectangle (10,2);
+\node at (5,1) {\huge Iteration Number: };
+\end{tikzpicture}
+
+% Smaller boxes for experiment name and description
+\noindent\begin{tikzpicture}
+\draw (0,0) rectangle (7,1);
+\node at (2,0.5) {\textbf{Experiment Name: }};
+\end{tikzpicture}
+\hspace{1cm}  % horizontal space between the boxes
+\begin{tikzpicture}
+\draw (0,0) rectangle (7,1);
+\node at (2,0.5) {\textbf{Description: }};
+\end{tikzpicture}
+
+\section{Computational Requirements for Bayesian Optimization}
+\begin{itemize}
+\item[\bigbox] {Generate samples using Sobol sampling}
+\item[\bigbox] {Generate the layout for \textbf{Opentrons II robot} transfer, generate a tick box list for the manual mixes, and the automated csv file for the \textbf{Triple Quadrupole mass spectrometer}}
+
+This will generate 5 files: A master table with the run information, a Opentrons II robot script, an QqQ csv table for mass spec run, a diagram with the microplate and the corresponding condition, and a table with the microplate layout and the colors.
+
+\item[\bigbox] {Generate tables for the microtubes mixes}
+\\\\
+\textbf{Pause!}
+
+\item[\bigbox] {Dataset prepared and preprocessed for the optimization task}
+\item[\bigbox] {Give new recommendations using the acquisition function}
+
+This will give files:
+\item[\bigbox] {Come back to the second step in a new sheet, all the boxes should be ticked}
+\end{itemize}
+
+\section{Opentrons II Robot Preparation}
+\begin{itemize}
+\item[\bigbox] {Test the programmed protocol with water and dummy plates}
+\\\\
+\textbf{On the preparation day!}
+
+\item[\bigbox] {Check the stock solutions that are needed for the experiment. Prepare fresh ones when required. Keep it fridged. Filter-sterilise when it's possible, specially with concentrated solutions.}
+\item[\bigbox] {Prepare the necessary mixes and keep in the fridge}
+\item[\bigbox] {Calibration of the robot (very important)}
+\item[\bigbox] {Loading of necessary labware (pipette tips, plates, etc.)}
+\item[\bigbox] {Programming the experimental protocol (it's given before)}
+\item[\bigbox] {Loading of samples and reagents}
+\item[\bigbox] {Run the programmed protocol}
+\\\\
+\textbf{After samples are collected} 
+
+\item[\bigbox] {Run the programmed protocol to make the QC pool}
+
+\end{itemize}
+
+\section{Plate Reader Preparation}
+\begin{itemize}
+\item[\bigbox] {Prepare agar plate with the bacteria (one day before)}
+\item[\bigbox] {Prepare complete media for pre-cultures}
+\item[\bigbox] {Prepare precultures (5ml complete media)}
+\item[\bigbox] {Calibration of the plate reader \textbf{(Currently not done by user)}}
+\item[\bigbox] {Setting up the main script with the correct parameters (wavelength, time, temperature, etc.)}
+\item[\bigbox] {Book the slot for the plater reader in the building system}
+\\\\
+\textbf{On the day of the experiment!}
+
+\item[\bigbox] {Setting up the software with the preheating programme (15 minutes before)}
+\item[\bigbox] {Preparing and loading the sample plate (Come from \textbf{Opentrons II robot} }
+
+\item[\bigbox] {Verifying the functioning and cleanliness of the reading chamber  \textbf{(Currently not done by user)}}
+\item[\bigbox] {Running the plate}
+\\\\
+\textbf{On between!}
+\item[\bigbox] {Prepare ice before taking off the plates}
+\item[\bigbox] {Weight and label every tube that will be used}
+
+\textbf{After 24 / 36 / 48 hrs}
+\item[\bigbox] {Take off the plate from the reader}
+\item[\bigbox] {Put the plate on ice, mix the wells with the tip, and move 500 ul to the tubes (that are on ice \textbf{Keep the plates for biofilm assay})}
+\item[\bigbox]{Quenching with cold methanol/water, the ratio should be }
+\item[\bigbox] {Centrifuge the tubes in a cold centrifuge}
+\item[\bigbox] {Take 400ul of the tubes into new ones cold, remove the rest of supernatant, keep everything on ice \textbf{Weight the pellet quickly}}
+\item[\bigbox] {Move the tubes to the -80 freezer}
+\end{itemize}
+
+\section{Triple Quadrupole Mass Spectrometer Preparation}
+\begin{itemize}
+\item[\bigbox] {Calibration of the mass spectrometer\textbf{(Currently not done by user)}}
+\item[\bigbox] {Cleaning and verifying the ion source and detector \textbf{Has to be done once a while} }
+\item[\bigbox] {Open csv for the sequence list, create new sequence from this file}
+\item[\bigbox] {Check that there's enough mobile phase solvent for the run and miliQ water for the seal wash}
+\item[\bigbox] {Check the status of the mass spec by looking at the parameters, and if they are in range}
+
+\item[\bigbox] {Run a few blanks, plus system suitability sample, plus a few blanks}
+\item[\bigbox] {Preparing and loading the samples from the experiment}
+%\item[\bigbox] {Optimizing the mass spectrometer settings for the analytes of interest}
+\item[\bigbox] {Perform the run}
+\end{itemize}
+
+% Dashed line to indicate a break
+%\noindent\textbf{\rule{\textwidth}{0.5pt}}
+
+% Dates section
+%\section*{Dates:}
+
+\end{document}
