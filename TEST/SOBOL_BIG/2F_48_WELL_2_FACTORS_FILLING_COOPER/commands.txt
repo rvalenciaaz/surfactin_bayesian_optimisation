@@ -1,0 +1,2 @@
+python 1_initial_samples_arguments.py --dim 2 --iter 0 --labels cooper_2F_labels.csv --samplesper 7 --big --batches 6
+python 2_48_well_exp_design_arguments.py component_data_cooper_space.csv cooper_rack_codes.csv cooper_reference_samples.csv --iteration 0 --dim 2 --maxvol 80 --maxwell 800
