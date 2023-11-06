@@ -1,0 +1,1 @@
+python 1_initial_samples_arguments.py --dim 2 --iter 0 --labels Glucose NH4NO3 --samplesper 7 --big --batches 6
