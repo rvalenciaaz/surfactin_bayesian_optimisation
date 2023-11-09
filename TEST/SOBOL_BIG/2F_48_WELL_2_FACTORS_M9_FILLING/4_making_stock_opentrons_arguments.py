@@ -52,7 +52,7 @@ with open("opentrons_scripts/"+str(iteration)+"_stock_opentrons.py","w") as f:
         f.write("\treservoir_"+str(rn)+"= protocol.load_labware('opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap',"+str(rn)+")\n")
     
     #write falcon tubes
-    f.write("\tbig1=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',6)\n\tbig2=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',9)\n\tbig3=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',8)\n")
+    f.write("\tbig1=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',6)\n\tbig2=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',9)\n")
     #write pipettes
     f.write("\tp1000 = protocol.load_instrument('p1000_single', 'right', tip_racks=[tiprack_1])\n\tp300 = protocol.load_instrument('p300_single', 'left', tip_racks=[tiprack_2])\n")
     #columns in tube stock df
@@ -97,27 +97,28 @@ with open("opentrons_scripts/"+str(iteration)+"_stock_opentrons.py","w") as f:
         else:
             for iq,j in df2.iterrows():
                 if ((j[i]<=300) & (j[i]!=0)):
-                    f.write("\tp300.aspirate("+str(j[i])+",big3['A4'],rate=0.7)\n")
+                    f.write("\tp300.aspirate("+str(j[i])+",big2['B4'],rate=0.7)\n")
                     f.write("\tp300.dispense("+str(j[i])+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
                 if ((j[i]>300) & (j[i]<=1000)):
-                    f.write("\tp1000.aspirate("+str(j[i])+",big3['A4'],rate=0.7)\n")
+                    f.write("\tp1000.aspirate("+str(j[i])+",big2['B4'],rate=0.7)\n")
                     f.write("\tp1000.dispense("+str(j[i])+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
                 if ((j[i]>1000)):
                     newfor="{:.2f}".format(j[i]/2)
-                    f.write("\tp1000.aspirate("+newfor+",big3['A4'],rate=0.7)\n")
+                    f.write("\tp1000.aspirate("+newfor+",big2['B4'],rate=0.7)\n")
                     f.write("\tp1000.dispense("+newfor+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
-                    f.write("\tp1000.aspirate("+newfor+",big3['A4'],rate=0.7)\n")
+                    f.write("\tp1000.aspirate("+newfor+",big2['B4'],rate=0.7)\n")
                     f.write("\tp1000.dispense("+newfor+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
         #drop tips
         if (df2[i] <= 300).all():
             f.write("\tp300.drop_tip()\n")
         elif (df2[i] >= 1000).all():
             f.write("\tp1000.drop_tip()\n")
-        elif all(300 < x <= 2000 for x in df2[i]):
+        elif (((df2[i] >= 300).all()) & ((df2[i] <= 1000).all())):
             f.write("\tp1000.drop_tip()\n")  
         else:
             f.write("\tp300.drop_tip()\n")
             f.write("\tp1000.drop_tip()\n")
+
 
 
 
