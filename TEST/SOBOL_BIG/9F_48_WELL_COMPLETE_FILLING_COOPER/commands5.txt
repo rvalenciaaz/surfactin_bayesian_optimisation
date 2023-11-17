@@ -1,0 +1,4 @@
+python 2_48_well_exp_design_arguments.py component_data_cooper_space.csv cooper_rack_codes.csv cooper_reference_samples.csv --iteration 5 --dim 9 --maxvol 80 --maxwell 800
+python 3_volumes_tube_stock_arguments.py --dim 9 --iteration 5 --voltube 2000 --maxwell 800 --maxvol 80 --stock stock_table_cooper.csv --medium cooper_preparation.csv --space component_data_cooper_space.csv
+python 4_making_stock_opentrons_arguments.py --iteration 5 --rackdata cooper_rack_codes_all.csv --bigdata cooper_big_codes.csv
+

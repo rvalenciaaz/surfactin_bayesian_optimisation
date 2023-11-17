@@ -113,7 +113,7 @@ with open("opentrons_scripts/"+str(iteration)+"_stock_opentrons.py","w") as f:
             f.write("\tp300.drop_tip()\n")
         elif (df2[i] >= 1000).all():
             f.write("\tp1000.drop_tip()\n")
-        elif (((df2[i] >= 300).all()) & ((df2[i] <= 1000).all())):
+        elif all(300 < x <= 2000 for x in df2[i]):
             f.write("\tp1000.drop_tip()\n")  
         else:
             f.write("\tp300.drop_tip()\n")
