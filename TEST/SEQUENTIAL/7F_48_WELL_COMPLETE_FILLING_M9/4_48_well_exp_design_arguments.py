@@ -9,6 +9,7 @@ import random
 import string
 from functools import reduce
 import matplotlib.patches as mpatches
+from itertools import product
 
 random.seed(1245)
 
@@ -148,9 +149,25 @@ def opentrons_script(labels_df,rack_df,ref_values,iteration, dim,maxvol, maxwell
 
     #setup number of rack
 
-    racknumber=int(np.ceil(compnumber/2))
-    rackcode=dict(zip(rack_df["Component"],rack_df["Position"]))
+    #racknumber=int(np.ceil(compnumber/2))
+    #rackcode=dict(zip(rack_df["Component"],rack_df["Position"]))
 
+    wells=["A"+str(i) for i in range(1,13)]+["B"+str(i) for i in range(1,13)]+["C"+str(i) for i in range(1,13)]+["D"+str(i) for i in range(1,13)]+["E"+str(i) for i in range(1,13)]+["F"+str(i) for i in range(1,13)]+["G"+str(i) for i in range(1,13)]+["H"+str(i) for i in range(1,13)]
+    group_size=9
+    groups = [wells[i:i + group_size] for i in range(0, len(wells), group_size)]
+    groups=groups[0:dim]
+    doubled_groups = [group + group for group in groups]
+    # Merge all doubled groups into one list
+    merged_list = [element for group in doubled_groups for element in group]
+
+    df=pd.read_csv("tube_stock/"+str(iteration)+"_tube_stock.csv")
+
+    tags=list(df.columns)[1:]
+    simp=df["sample"].tolist()
+    combinations = [f"{a}_{b}" for a, b in product(tags, simp)]
+
+    linea=dict(zip(combinations,merged_list))
+    #print(linea)
     with open("opentrons_scripts/"+str(iteration)+"_opentrons.py","w") as f:
         #writing api level and function
         f.write("from opentrons import protocol_api\nmetadata = {'apiLevel': '2.13'}\ndef run(protocol: protocol_api.ProtocolContext):\n")
@@ -158,18 +175,24 @@ def opentrons_script(labels_df,rack_df,ref_values,iteration, dim,maxvol, maxwell
         f.write("\tplate = protocol.load_labware('corning_48_wellplate_1.6ml_flat', 8)\n\ttiprack_2 = protocol.load_labware('opentrons_96_tiprack_300ul', 11)\n")
         #writing more labware, change to 96 deep well plate
         #for rn in range(1, racknumber+1):
-        f.write("\treservoir_"+str(rn)+"= protocol.load_labware('nest_96_wellplate_2ml_deep',"+str(rn)+")\n")
+        f.write("\treservoir = protocol.load_labware('nest_96_wellplate_2ml_deep',5)\n")
         #writing more labware 2
         f.write("\tbig= protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',6)\n\tp300 = protocol.load_instrument('p300_single', 'left', tip_racks=[tiprack_2])\n")
         #ordered sample labels
         for i in sami:
             #subset dataframe
             mini=tem.loc[tem["sample"]==i].copy()
+            #print(mini)
+
             for compi in mini.columns[3:3+compnumber]:
                 f.write("\t#"+compi+"_"+i+"\n")
                 f.write("\tp300.pick_up_tip()\n")
-                for res, ving in zip(mini[compi],mini["well_position"]):
-                    f.write("\tp300.aspirate("+str(maxvol)+", reservoir_"+rackcode[compi]+"['"+res+"'],rate=0.7)\n")
+                if compi!="water":
+                    newname="Vol_"+compi+"_"+i
+                else:
+                    newname="Vol_Water_"+i
+                for res, ving in zip([newname]*4,mini["well_position"]):
+                    f.write("\tp300.aspirate("+str(maxvol)+", reservoir['"+linea[res]+"'],rate=0.7)\n")
                     f.write("\tp300.dispense("+str(maxvol)+", plate['"+ving+"'],rate=0.7)\n")
                 f.write("\tp300.drop_tip()\n")
         if rema!=0:

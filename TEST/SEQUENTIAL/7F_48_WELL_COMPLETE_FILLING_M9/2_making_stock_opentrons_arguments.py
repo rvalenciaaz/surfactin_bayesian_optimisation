@@ -4,6 +4,7 @@
 import pandas as pd
 import numpy as np
 import argparse
+from itertools import product
 
 # Set up argument parser
 parser = argparse.ArgumentParser(description="Process the inputs for the script.")
@@ -24,7 +25,7 @@ compnumber=len(pd.unique(rackcode.index))
 #changing rate to 0.7
 
 #iteration=0
-#dim=7
+dim=7
 
 df=pd.read_csv("tube_stock/"+str(iteration)+"_tube_stock.csv")
 
@@ -47,17 +48,34 @@ with open("opentrons_scripts/"+str(iteration)+"_stock_opentrons.py","w") as f:
     f.write("from opentrons import protocol_api\nmetadata = {'apiLevel': '2.13'}\ndef run(protocol: protocol_api.ProtocolContext):\n")
     #write tips
     f.write("\ttiprack_1 = protocol.load_labware('opentrons_96_tiprack_1000ul',10)\n\ttiprack_2 = protocol.load_labware('opentrons_96_tiprack_300ul', 11)\n")
-    #write tube racks
-    for rn in range(1, racknumber+1):
-        f.write("\treservoir_"+str(rn)+"= protocol.load_labware('opentrons_24_tuberack_eppendorf_2ml_safelock_snapcap',"+str(rn)+")\n")
+    #write tube racks, adapted to 96-well deep well plate
+    f.write("\treservoir = protocol.load_labware('nest_96_wellplate_2ml_deep',5)\n")
     
     #write falcon tubes
     f.write("\tbig1=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',6)\n\tbig2=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',9)\n")
     #write pipettes
     f.write("\tp1000 = protocol.load_instrument('p1000_single', 'right', tip_racks=[tiprack_1])\n\tp300 = protocol.load_instrument('p300_single', 'left', tip_racks=[tiprack_2])\n")
     #columns in tube stock df
+    wells=["A"+str(i) for i in range(1,13)]+["B"+str(i) for i in range(1,13)]+["C"+str(i) for i in range(1,13)]+["D"+str(i) for i in range(1,13)]+["E"+str(i) for i in range(1,13)]+["F"+str(i) for i in range(1,13)]+["G"+str(i) for i in range(1,13)]+["H"+str(i) for i in range(1,13)]
+    group_size=9
+    groups = [wells[i:i + group_size] for i in range(0, len(wells), group_size)]
+    groups=groups[0:dim]
+    doubled_groups = [group + group for group in groups]
+    # Merge all doubled groups into one list
+    merged_list = [element for group in doubled_groups for element in group]
+
+
+    tags=list(df.columns)[1:]
+    simp=df["sample"].tolist()
+    combinations = [f"{a}_{b}" for a, b in product(tags, simp)]
+
+    linea=dict(zip(combinations,merged_list))
+    #print(linea)
     for i in pd.unique(df.columns[1:]):
         df2=df[["sample",i]].copy().reset_index(drop=True)
+        df3=df2.copy()
+        df3["sample"]=df3["sample"].apply(lambda x: i+"_"+x)
+        #print(df3)
         #write comment about compound
         f.write("\t#"+i+"\n")
         #pick tips
@@ -71,43 +89,45 @@ with open("opentrons_scripts/"+str(iteration)+"_stock_opentrons.py","w") as f:
         #check if it's the compound of water
         cati=i.split("_")
         #rack and falcon tubes coords
-        rackdata=rackcode.loc[cati[1]]
+        #rackdata=rackcode.loc[cati[1]]
         bigdata=bigcode.loc[cati[1]]
-        if rackdata[1]=="1":
-            linea=re1
-        else:
-            linea=re2
+        #if rackdata[1]=="1":
+        #    linea=re1
+        #else:
+        #    linea=re2
         resi=bigdata[1]
         #if the column is a compound
+        #print(df2)
+
         if cati[0]=="Vol":
-            for iq,j in df2.iterrows():
+            for iq,j in df3.iterrows():
                 if ((j[i]<=300) & (j[i]!=0)):
                     f.write("\tp300.aspirate("+str(j[i])+",big"+resi+"['"+bigdata[0]+"'],rate=0.7)\n")
-                    f.write("\tp300.dispense("+str(j[i])+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
+                    f.write("\tp300.dispense("+str(j[i])+",reservoir['"+linea[j["sample"]]+"'],rate=0.7)\n")
                 if ((j[i]>300) & (j[i]<=1000)):
                     f.write("\tp1000.aspirate("+str(j[i])+",big"+resi+"['"+bigdata[0]+"'],rate=0.7)\n")
-                    f.write("\tp1000.dispense("+str(j[i])+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
+                    f.write("\tp1000.dispense("+str(j[i])+",reservoir['"+linea[j["sample"]]+"'],rate=0.7)\n")
                 if ((j[i]>1000)):
                     newfor="{:.2f}".format(j[i]/2)
                     f.write("\tp1000.aspirate("+newfor+",big"+resi+"['"+bigdata[0]+"'],rate=0.7)\n")
-                    f.write("\tp1000.dispense("+newfor+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
+                    f.write("\tp1000.dispense("+newfor+",reservoir['"+linea[j["sample"]]+"'],rate=0.7)\n")
                     f.write("\tp1000.aspirate("+newfor+",big"+resi+"['"+bigdata[0]+"'],rate=0.7)\n")
-                    f.write("\tp1000.dispense("+newfor+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
+                    f.write("\tp1000.dispense("+newfor+",reservoir['"+linea[j["sample"]]+"'],rate=0.7)\n")
         #if the column is water
         else:
-            for iq,j in df2.iterrows():
+            for iq,j in df3.iterrows():
                 if ((j[i]<=300) & (j[i]!=0)):
                     f.write("\tp300.aspirate("+str(j[i])+",big2['B4'],rate=0.7)\n")
-                    f.write("\tp300.dispense("+str(j[i])+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
+                    f.write("\tp300.dispense("+str(j[i])+",reservoir['"+linea[j["sample"]]+"'],rate=0.7)\n")
                 if ((j[i]>300) & (j[i]<=1000)):
                     f.write("\tp1000.aspirate("+str(j[i])+",big2['B4'],rate=0.7)\n")
-                    f.write("\tp1000.dispense("+str(j[i])+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
+                    f.write("\tp1000.dispense("+str(j[i])+",reservoir['"+linea[j["sample"]]+"'],rate=0.7)\n")
                 if ((j[i]>1000)):
                     newfor="{:.2f}".format(j[i]/2)
                     f.write("\tp1000.aspirate("+newfor+",big2['B4'],rate=0.7)\n")
-                    f.write("\tp1000.dispense("+newfor+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
+                    f.write("\tp1000.dispense("+newfor+",reservoir['"+linea[j["sample"]]+"'],rate=0.7)\n")
                     f.write("\tp1000.aspirate("+newfor+",big2['B4'],rate=0.7)\n")
-                    f.write("\tp1000.dispense("+newfor+",reservoir_"+rackdata[0]+"['"+linea[iq]+"'],rate=0.7)\n")
+                    f.write("\tp1000.dispense("+newfor+",reservoir['"+linea[j["sample"]]+"'],rate=0.7)\n")
         #drop tips
         if (df2[i] <= 300).all():
             f.write("\tp300.drop_tip()\n")
