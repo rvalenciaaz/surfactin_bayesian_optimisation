@@ -1,0 +1,8 @@
+Glucose_Na
+L-Arginine
+L-Histidine
+L-Lactate
+L-Phenylalanine
+L-Threonine
+L-Valine
+Butyrate

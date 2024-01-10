@@ -1,0 +1,101 @@
+﻿Compound,Retention Time (min),RT Window (min),Polarity,Precursor (m/z),Product (m/z),Collision Energy (V),Min Dwell Time (ms)
+Glycine,0.4,0.8,Positive,76.039,30.19,12.96,6.581
+Glycine,0.4,0.8,Positive,76.039,44.012,11.23,6.581
+L-Alanine,0.4,0.8,Positive,90.055,44.083,12.71,6.581
+L-Alanine,0.4,0.8,Positive,90.055,62.083,5.25,6.581
+L-Serine,0.4,0.8,Positive,106.05,60,12.08,6.581
+L-Serine,0.4,0.8,Positive,106.05,88.042,9.38,6.581
+L-Proline,0.4,0.8,Positive,116.071,68,28.38,6.581
+L-Proline,0.4,0.8,Positive,116.071,70.071,16.12,6.581
+L-Valine,0.4,0.8,Positive,118.086,57.054,29.94,6.581
+L-Valine,0.4,0.8,Positive,118.086,72,11.49,6.581
+L-Threonine,0.4,0.8,Positive,120.066,74,11.4,6.581
+L-Threonine,0.4,0.8,Positive,120.066,103,18.44,6.581
+L-Leucine,0.4,0.8,Positive,132.102,30.208,18.23,6.581
+L-Leucine,0.4,0.8,Positive,132.102,43.298,25.3,6.581
+L-isoleucine,0.4,0.8,Positive,132.102,57.071,30.44,6.581
+L-isoleucine,0.4,0.8,Positive,132.102,69,17.76,6.581
+L-Asparagine,0.4,0.8,Positive,133.061,73.857,17.47,6.581
+L-Asparagine,0.4,0.8,Positive,133.061,87.071,11.07,6.581
+L-Glutamine,0.4,0.8,Positive,147.076,84,17.55,6.581
+L-Glutamine,0.4,0.8,Positive,147.076,101.214,11.91,6.581
+L-Glutamine,0.4,0.8,Positive,147.076,129.929,9.63,6.581
+L-Lysine,0.4,0.8,Positive,147.113,84.071,17.89,6.581
+L-Lysine,0.4,0.8,Positive,147.113,130.071,10.43,6.581
+L-Methionine,0.4,0.8,Positive,150.058,56.054,18.06,6.581
+L-Methionine,0.4,0.8,Positive,150.058,133,10.05,6.581
+L-Histidine,0.4,0.8,Positive,156.077,93,23.62,6.581
+L-Histidine,0.4,0.8,Positive,156.077,110.054,15.19,6.581
+L-Phenylalanine,0.4,0.8,Positive,166.086,77,39.84,6.581
+L-Phenylalanine,0.4,0.8,Positive,166.086,120.054,14.06,6.581
+L-Arginine,0.4,0.8,Positive,175.119,70.071,23.7,6.581
+L-Arginine,0.4,0.8,Positive,175.119,158.054,12.71,6.581
+L-Tyrosine,0.4,0.8,Positive,182.081,136.089,13.93,6.581
+L-Tyrosine,0.4,0.8,Positive,182.081,165.071,10.27,6.581
+Glucose_Na_b,0.4,0.8,Positive,202.964,161.03,13.17,6.581
+Glucose_Na,0.4,0.8,Positive,202.964,161.03,13.17,6.581
+Glucose_Na,0.4,0.8,Positive,202.964,185.113,8.16,6.581
+L-Tryptophan,0.4,0.8,Positive,205.097,146.071,18.18,6.581
+L-Tryptophan,0.4,0.8,Positive,205.097,188.071,10.35,6.581
+Extra3,0.5,1,Positive,994.8,685.48,20,6.581
+SurfactinA,0.5,1,Positive,1008.8,685.48,20,6.581
+SurfactinB,0.5,1,Positive,1022.8,685.48,20,6.581
+SurfactinC,0.5,1,Positive,1036.8,685.48,20,6.581
+Extra1,0.5,1,Positive,1044.8,685.48,20,6.581
+Extra2,0.5,1,Positive,1058.8,685.48,20,6.581
+Acetate,0.4,0.8,Negative,61.1,43,16,6.581
+Propionate,0.4,0.8,Negative,75,29,18,6.581
+Pyruvate,0.4,0.8,Negative,87.008,43.083,8.79,6.581
+Pyruvate,0.4,0.8,Negative,87.008,68.929,5.25,6.581
+L-Lactate,0.4,0.8,Negative,89.024,45.125,12.2,6.581
+L-Lactate,0.4,0.8,Negative,89.024,71.012,9.21,6.581
+Butyrate,0.4,0.8,Negative,89.1,43.1,14,6.581
+Isovalerate,0.4,0.8,Negative,103.1,43,14,6.581
+Valerate,0.4,0.8,Negative,103.1,75,10,6.581
+Choline,0.4,0.8,Negative,104,60.3,17,6.581
+Fumarate,0.4,0.8,Negative,115.003,69.054,13.34,6.581
+Fumarate,0.4,0.8,Negative,115.003,71.03,8.16,6.581
+Succinate,0.4,0.8,Negative,117.019,73.113,11.74,6.581
+Succinate,0.4,0.8,Negative,117.019,98.827,7.86,6.581
+Nicotinamide,0.4,0.8,Negative,123,80,32,6.581
+Nicotinic acid,0.4,0.8,Negative,124,80.2,20,6.581
+L-Aspartate,0.4,0.8,Negative,132.03,88.143,11.91,6.581
+L-Aspartate,0.4,0.8,Negative,132.03,115.071,9.8,6.581
+(S)-Malate,0.4,0.8,Negative,133.014,70.988,13.34,6.581
+(S)-Malate,0.4,0.8,Negative,133.014,114.929,11.15,6.581
+"R-2,3-Dihydroxy-isovalerate",0.4,0.8,Negative,133.051,133.051,0,6.581
+S-2-Aceto-2-hydroxybutanoate,0.4,0.8,Negative,145.051,145.051,0,6.581
+L-Glutamate,0.4,0.8,Negative,146.045,73.911,19.74,6.581
+L-Glutamate,0.4,0.8,Negative,146.045,128.143,9.76,6.581
+"R-2,3-dihydroxy-3-methylpentanoate",0.4,0.8,Negative,147.066,147.066,0,6.581
+Glyceraldehyde 3-P,0.4,0.8,Negative,169.051,151.006,5.25,6.581
+Pyrodoxine,0.4,0.8,Negative,170,152,20,6.581
+cis-aconitate,0.4,0.8,Negative,173,84.958,12.75,6.581
+cis-aconitate,0.4,0.8,Negative,173,129.012,5.25,6.581
+Ascorbic acid,0.4,0.8,Negative,177,141,8,6.581
+D-glucose,0.4,0.8,Negative,179.056,59.143,19.62,6.581
+D-glucose,0.4,0.8,Negative,179.056,73.03,5.25,6.581
+D-glucose,0.4,0.8,Negative,179.056,135.113,11.91,6.581
+3-Phospho-D-glycerate,0.4,0.8,Negative,184.986,123.107,17.01,6.581
+3-Phospho-D-glycerate,0.4,0.8,Negative,184.986,166.917,9.04,6.581
+Citrate,0.4,0.8,Negative,191.02,86.845,17.89,6.581
+Isocitrate,0.4,0.8,Negative,191.02,116.958,14.81,6.581
+Isocitrate,0.4,0.8,Negative,191.02,172.929,7.86,6.581
+D-Erythrose 4-phosphate,0.4,0.8,Negative,199.001,139.131,12.54,6.581
+Pantothenic acid,0.4,0.8,Negative,220.1,90,20,6.581
+D-ribose 5-phosphate,0.4,0.8,Negative,229.011,138.97,12.58,6.581
+D-ribose 5-phosphate,0.4,0.8,Negative,229.011,169.042,11.57,6.581
+D-Ribulose 5-phosphate,0.4,0.8,Negative,229.012,139.012,16.67,6.581
+D-Xylulose 5-phosphate,0.4,0.8,Negative,229.012,139.089,13.64,6.581
+D-Xylulose 5-phosphate,0.4,0.8,Negative,229.012,169.113,10.86,6.581
+Biotin,0.4,0.8,Negative,245.1,227,14,6.581
+D-Fructose 6-phosphate,0.4,0.8,Negative,259.022,138.929,16.5,6.581
+D-Fructose 6-phosphate,0.4,0.8,Negative,259.022,168.708,8.71,6.581
+Thiamine,0.4,0.8,Negative,265.2,122,16,6.581
+6-Phosphogluconic acid,0.4,0.8,Negative,275.017,195.143,21.68,6.581
+6-Phosphogluconic acid,0.4,0.8,Negative,275.017,256.899,12.83,6.581
+D-Sedoheptulose 7-phosphate,0.4,0.8,Negative,289.033,198.929,11.19,6.581
+Riboflavin,0.4,0.8,Negative,377.2,243.1,24,6.581
+Folic acid,0.4,0.8,Negative,442.2,295.1,18,6.581
+Cyanocobalamin,0.4,0.8,Negative,678.6,147.1,30,6.581
+Oxoglutarate,0.4,0.8,Negative,145.02,101,10.25,6.581

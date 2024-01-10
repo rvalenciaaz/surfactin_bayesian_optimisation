@@ -1,8 +1,8 @@
 from opentrons import protocol_api
 metadata = {'apiLevel': '2.13'}
 def run(protocol: protocol_api.ProtocolContext):
-	tiprack_1 = protocol.load_labware('opentrons_96_tiprack_1000ul',10)
-	tiprack_2 = protocol.load_labware('opentrons_96_tiprack_300ul', 11)
+	tiprack_1 = protocol.load_labware('opentrons_96_tiprack_1000ul',7)
+	tiprack_2 = protocol.load_labware('opentrons_96_tiprack_300ul', 4)
 	reservoir = protocol.load_labware('nest_96_wellplate_2ml_deep',5)
 	big1=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',6)
 	big2=protocol.load_labware('opentrons_10_tuberack_falcon_4x50ml_6x15ml_conical',9)
