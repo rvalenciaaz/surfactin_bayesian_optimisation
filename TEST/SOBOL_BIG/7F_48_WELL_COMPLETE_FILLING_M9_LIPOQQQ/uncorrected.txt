@@ -1,0 +1,13 @@
+6-Phosphogluconic acid
+3-Phospho-D-glycerate
+Biotin
+Citrate
+D-Fructose 6-phosphate
+D-glucose
+Glucose_Na_b
+Isocitrate
+L-Tryptophan
+"R-2,3-dihydroxy-3-methylpentanoate"
+"R-2,3-Dihydroxy-isovalerate"
+(S)-Malate
+Succinate

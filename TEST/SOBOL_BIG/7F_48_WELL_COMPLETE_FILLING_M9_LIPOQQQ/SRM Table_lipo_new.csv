@@ -1,0 +1,7 @@
+﻿Compound,Retention Time (min),RT Window (min),Polarity,Precursor (m/z),Product (m/z),Collision Energy (V),Min Dwell Time (ms)
+Extra3,0.5,1,Positive,994.8,685.48,20,6.581
+SurfactinA,0.5,1,Positive,1008.8,685.48,20,6.581
+SurfactinB,0.5,1,Positive,1022.8,685.48,20,6.581
+SurfactinC,0.5,1,Positive,1036.8,685.48,20,6.581
+Extra1,0.5,1,Positive,1044.8,685.48,20,6.581
+Extra2,0.5,1,Positive,1058.8,685.48,20,6.581
