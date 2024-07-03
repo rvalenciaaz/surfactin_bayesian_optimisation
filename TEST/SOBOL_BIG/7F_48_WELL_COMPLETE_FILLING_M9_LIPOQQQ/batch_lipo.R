@@ -56,11 +56,9 @@ desired_order <- order_filtered$`File Name`
 # Reorder columns in target DataFrame
 target_df<- df_filtered[, desired_order]
 
-#sample_order <- c(1:ncol(target_df))
-sample_order <- rep(1:47, times = 6)
-batch <- sapply(desired_order, function(x) as.integer(substring(x, 1, 1)))
+sample_order <- c(1:ncol(target_df))
 
-#batch <- rep("0", length(colnames(target_df)))
+batch <- rep("0", length(colnames(target_df)))
 class <- ifelse(grepl("QC", colnames(target_df)), 
                 "QC", 
                 sapply(strsplit(colnames(target_df), "_"), `[`, 2))
@@ -74,12 +72,12 @@ corrected_data <- QCRSC(df=new_df, order=sample_order, batch=batch,
                         classes=class, spar=0, minQC=4)
 
 plots <- sbc_plot (df=new_df, corrected_df=corrected_data, classes=class, 
-                   batch=batch, output="temp.pdf", indexes=seq(2,2))
+                   batch=batch, output="temp.pdf", indexes=seq(1,58))
 
 data_normalised <- pqn_normalisation(df=corrected_data,classes=class, qc_label="QC")
 
 
-write.csv(t(assay(corrected_data)), paste("batch_correction/",iteration,"_batch_corrected.csv",sep=""))
+write.csv(data_normalised, paste("batch_correction/",iteration,"_batch_corrected.csv",sep=""))
 
 df <- MTBLS79[ , MTBLS79$Batch==1]
 df2<- pqn_normalisation(df=df,
